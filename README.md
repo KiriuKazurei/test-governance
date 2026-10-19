@@ -1,55 +1,64 @@
-# test-governance · 测试治理
+# test-governance
 
-让 Codex 随产品变化持续维护测试：优先更新现有套件、复用样本与运行入口，及时合并重复覆盖、退役失效测试，并控制生成物堆积。
+[English](README.md) | [简体中文](README_zh.md)
 
-适用于测试规划、编写、执行、清理，以及功能迭代、版本升级、接口变化和架构重构时的测试影响检查。测试代码保留在源码中；一份权威测试说明负责解释覆盖关系和运行方式。
+Keep tests maintained as the product changes. This Codex skill prioritizes existing suites, shared fixtures and runners, removes redundant coverage when justified, retires obsolete tests, and controls generated artifacts.
 
-## 安装 Skill
+Use it for test planning, implementation, execution and cleanup, and for reviewing test impact during feature changes, version upgrades, interface changes and architectural refactoring. Test code stays in source files; one authoritative testing document explains coverage and execution.
 
-解压发布附件 `test-governance.zip`，将其中完整的 `test-governance` 文件夹放入 Codex 能发现的用户级 Skill 目录。也可以使用本仓库根目录作为 Skill 文件夹；通过 GitHub 下载源码时，将外层目录改名为 `test-governance`。当前官方文档使用 `~/.agents/skills/`；Windows 对应 `%USERPROFILE%\.agents\skills\`。安装后的结构如下。[官方 Skill 文档](https://learn.chatgpt.com/docs/build-skills)
+## Copy to Codex: install the skill
 
-```text
-test-governance/
-├── SKILL.md
-├── README.md
-└── agents/
-    └── openai.yaml
-```
-
-如果你的现有环境已经通过 `~/.codex/skills/` 或其他目录发现 Skill，沿用实际可发现的位置；先让 Codex 确认可用列表中存在 `$test-governance`，避免重复安装同名 Skill。未显示时重启 Codex 再检查。
-
-## 复制给 Codex：在所有项目中启用
-
-安装后，将下面整段提示词发给 Codex 一次，让它把规则写入你自己的有效全局指引。只在当前聊天中说“以后都使用”，不能替代持久化配置。
+Send the entire prompt below to Codex. Let it download, install and verify the skill without manually extracting or moving folders.
 
 ```text
-请将已安装的 $test-governance 配置为我在所有项目中的测试治理规则，而不只在当前对话使用。
+Install the test-governance skill for me from https://github.com/KiriuKazurei/test-governance. Complete the download, installation and verification.
 
-先核验可用 Skill 列表，找到 test-governance 并读取其 SKILL.md。记录实际安装路径；不要照抄其他人的用户名或目录。找不到时明确说明缺少 Skill，不要声称已启用。
+Download test-governance.zip from the latest stable GitHub Release:
+https://github.com/KiriuKazurei/test-governance/releases/latest/download/test-governance.zip
 
-找到当前环境实际使用的 Codex 用户目录：设置了 CODEX_HOME 时使用该目录，否则使用 ~/.codex。读取现有全局 AGENTS.md；如果存在非空的 AGENTS.override.md，应将规则写入实际生效的覆盖文件，避免只修改被忽略的文件。保留现有内容，在同一个 test-governance 区块中局部追加或更新，重复执行时不要产生多个相同区块，不要遍历修改我所有项目的 AGENTS.md。
+First inspect the release tag and asset metadata and record the installation source. Verify the downloaded SHA256 if a digest is provided. Use a temporary directory dedicated to this installation; check that archive entry paths and links cannot escape it before extracting. Inspect SKILL.md, agents/openai.yaml and the documentation.
 
-请将以下要求写入有效的全局指引，并填入已核验的 Skill 实际路径：
+Determine the user-level skill directory that this Codex environment actually discovers, then install the complete test-governance folder there. Use the current environment and official documentation rather than copying the author's username or paths. Do not assume that the skills directory must be inside CODEX_HOME. If a skill with the same name already exists, check its source and local modifications first, then report whether it already meets the requirements or needs updating. Before replacement, preserve a recoverable copy and avoid overwriting unreviewed local modifications.
 
-在任何项目涉及测试规划、编写、执行或清理，以及功能改动、缺陷修复、版本迭代、接口调整、架构修改或重构的测试影响检查时，必须先读取并遵循 $test-governance，再决定如何维护或运行测试。优先维护现有套件、共享样本、运行入口和项目权威测试说明；新增套件须有独立、长期的覆盖职责，不得每个任务新建一套测试后将旧套件搁置。重大改动必须检查受影响测试的保留、更新、合并、退役及覆盖缺口。临时复现脚本应归并或按授权移除，确需保留时说明用途与后续动作。生成物的目录、容量和留档遵守各项目规则，不把某个项目的具体数字套到所有项目。交付时如实区分已通过、失败、未执行和待人工验收。
+Read the installed SKILL.md and agents/openai.yaml. Verify that the name is test-governance, the files are complete and readable, and implicit invocation has not been disabled. Report the actual installation path, release tag and verification results. If the current session cannot refresh its skill list, explain that Codex must be restarted or a new session opened before verifying discovery; do not claim that future loading has already been verified.
 
-这些要求不能覆盖我明确的任务边界或项目适用规则，也不要求为低影响改动新增测试。不额外授权运行程序、安装依赖、调用收费或外部服务、删除文件或清理业务数据。遇到冲突按指令优先级和具体适用范围处理，必要时说明冲突。
-
-本次只完成配置与核验，不自动启动项目测试、全仓重构或历史清理。完成后告诉我 Skill 实际位置、修改的全局指引路径和新增规则；如需新会话或重启才能加载，也请说明。不要把“已写入规则”说成“已经验证所有项目的实际执行”。
+Limit this task to downloading, installing and verifying this skill. Preserve other skills and global instructions, and do not run project tests or clean historical data. Remove temporary download and extraction files created by this installation once it is complete. I will then use the separate README prompt to configure mandatory use across all projects.
 ```
 
-Codex 的全局指引默认位于 `~/.codex/AGENTS.md`，可以受 `CODEX_HOME` 和全局 `AGENTS.override.md` 影响；项目指引仍会参与合并。修改后在新会话中核验实际加载情况。[官方全局指引说明](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+See the [official skills documentation](https://learn.chatgpt.com/docs/build-skills) for discovery and refresh behavior. Installing a skill does not itself require Codex to use it for every relevant task; complete the global configuration below.
 
-## 验证配置
+## Copy to Codex: enable across all projects
 
-在任意项目的新 Codex 会话中发送：
+After installation, send the entire prompt below once so Codex records the rule in your effective global instructions. Saying “always use this” in one chat is not a substitute for persistent configuration.
 
 ```text
-请只核验测试治理配置，不运行测试或修改项目：列出本会话实际加载的全局与项目指引，确认其中是否要求涉及测试时使用 $test-governance，并读取该 Skill，说明下一次测试改动会优先维护哪个现有入口。未找到配置、Skill 或项目测试入口时如实说明。
+Configure the installed $test-governance skill as my test governance rule across all projects, not just this conversation.
+
+First check the available skills, locate test-governance and read its SKILL.md. Record the actual installation path rather than copying another person's username or directory. If the skill cannot be found, report that it is missing; do not claim it has been enabled.
+
+Locate the actual Codex home directory: use CODEX_HOME when set, otherwise ~/.codex. Read the existing global AGENTS.md. If a non-empty AGENTS.override.md exists, write the rule into that effective override rather than only editing an ignored file. Preserve existing content, and add or update a single test-governance block. Repeated configuration must not create duplicate blocks. Do not traverse and modify AGENTS.md in all my repositories.
+
+Add the following requirements to the effective global instructions, including the verified skill path:
+
+In every project, before choosing how to maintain or run tests, read and follow $test-governance whenever work involves test planning, writing, execution or cleanup, or reviewing the test impact of feature changes, bug fixes, version upgrades, interface changes, architectural changes or refactoring. Prefer maintaining existing suites, shared fixtures, runners and the project's authoritative testing document. A new suite needs a distinct, lasting coverage responsibility; do not create a separate suite per task and abandon the old ones. Major changes must review affected tests for retention, updates, consolidation, retirement and missing coverage. Consolidate temporary reproduction scripts or remove them within authorization; document the purpose and next action for anything that must remain. Follow each project's own artifact locations, storage limits and archive rules rather than copying one project's numbers everywhere. Clearly distinguish passing, failing, unexecuted and pending human acceptance results.
+
+These requirements do not override my explicit task scope or applicable project instructions and do not require new tests for low-impact changes. They do not grant additional permission to run programs, install dependencies, call paid or external services, delete files or clean business data. Resolve conflicts according to instruction priority and the applicable scope, and explain conflicts when needed.
+
+For this task, only configure and verify the rule. Do not start project tests, repository-wide refactoring or historical cleanup. Report the actual skill path, the global instruction file changed and the added rule. Explain if a new session or restart is required. Do not describe a written rule as proof that its behavior has been verified in every project.
 ```
 
-如果只想临时使用，可直接发送：`使用 $test-governance 维护本次改动涉及的测试，优先更新现有套件和测试说明。`
+Global instructions default to `~/.codex/AGENTS.md` and can be affected by `CODEX_HOME` and a global `AGENTS.override.md`. Project instructions also participate in the instruction chain. Verify actual loading in a new session after changing configuration. See the [official global instructions guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 
-## 使用边界
+## Verify configuration
 
-这是提供给 Agent 的工作规范，不包含测试框架、自动清理程序或强制执行钩子。它不绑定语言、操作系统、项目限额或版本目录，也不替代 CI 门禁。是否执行测试、清理哪些内容及是否访问外部服务，仍按用户授权和项目规则决定。
+Send this in a new Codex session in any project:
+
+```text
+Only verify the test governance configuration; do not run tests or modify the project. List the global and project instruction files actually loaded in this session. Confirm whether they require $test-governance for relevant testing work, then read the skill and identify the existing project test entry point you would maintain for the next test change. Report missing configuration, the skill or a project test entry point honestly.
+```
+
+For one-time use, send: `Use $test-governance to maintain the tests affected by this change, prioritizing existing suites and testing documentation.`
+
+## Scope
+
+This is an agent workflow, without a test framework, automatic cleanup program or enforcement hook. It does not prescribe a language, operating system, storage limit or versioned output directory, and it does not replace CI gates. Test execution, cleanup scope and external service access remain subject to user authorization and project rules.
